@@ -8,9 +8,6 @@ public class Greeter1 {
   /**
    * This is a constructor.
    */
-  public Greeter1() {
-
-  }
 
   //TODO: Add javadoc comment
   public String greet(String someone) {
