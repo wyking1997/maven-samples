@@ -1,4 +1,4 @@
-package com.example;
+package com.jenkov;
 
 /**
  * This is a class.

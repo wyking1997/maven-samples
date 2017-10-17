@@ -1,4 +1,4 @@
-package com.example;
+package com.jenkov;
 
 import org.junit.Before;
 import org.junit.Test;

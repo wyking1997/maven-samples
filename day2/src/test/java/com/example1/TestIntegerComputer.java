@@ -35,3 +35,5 @@ public class TestIntegerComputer {
                 assertEquals((long)this.integerComputer.performMultiplication(i, j), i * j);
     }
 }
+
+//parametized junit tests
