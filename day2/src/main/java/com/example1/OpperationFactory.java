@@ -1,5 +1,7 @@
 package com.example1;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class OpperationFactory {
 
     private static IntegerSumComputer integerSumComputer = new IntegerSumComputer();
@@ -11,7 +13,7 @@ public class OpperationFactory {
             case "+": return integerSumComputer;
             case "-": return integerDifferenceComputer;
             case "*": return integerMultiplicationComputer;
+            default: throw new NotImplementedException();
         }
-        return null;
     }
 }

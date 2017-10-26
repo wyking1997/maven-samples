@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class HashSetBasedRepository<T> implements InMemoryRepository<T> {
-    Set<T> arr;
+    private Set<T> arr;
 
     public HashSetBasedRepository() {
         this.arr = new HashSet<>();

@@ -8,7 +8,6 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -21,7 +20,7 @@ public class MyBenchMark {
     public int size;
 
     @Benchmark
-    public void array_add(Blackhole consummer,MyState state){
+    public void arrayAdd(Blackhole consummer,MyState state){
         ArrayListBasedRepositpory<Order> orders = new ArrayListBasedRepositpory<>();
 
         for(int i=0; i<size;i++){

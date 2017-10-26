@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class TreeSetBasedRepository<T> implements InMemoryRepository<T> {
-    Set<T> arr;
+    private Set<T> arr;
 
     public TreeSetBasedRepository() {
         this.arr = new TreeSet<>();
