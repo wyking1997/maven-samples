@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="215.0" y="80.0">com.example1.IntegerMultiplicationComputer</node>
+    <node x="301.75" y="170.0">com.example1.OpperationFactory</node>
+    <node x="0.0" y="80.0">com.example1.IntegerDifferenceComputer</node>
+    <node x="333.421875" y="0.0">com.example1.IntegerOpperationComputer</node>
+    <node x="177.75" y="170.0">com.example1.Computer</node>
+    <node x="450.0" y="80.0">com.example1.IntegerSumComputer</node>
+    <node x="232.5" y="250.0">com.example1.IntegerComputer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.example1.IntegerSumComputer" target="com.example1.IntegerOpperationComputer">
+      <point x="0.0" y="-15.0" />
+      <point x="532.5" y="60.0" />
+      <point x="459.046875" y="60.0" />
+      <point x="25.125" y="15.0" />
+    </edge>
+    <edge source="com.example1.IntegerMultiplicationComputer" target="com.example1.IntegerOpperationComputer">
+      <point x="0.0" y="-15.0" />
+      <point x="322.5" y="60.0" />
+      <point x="408.796875" y="60.0" />
+      <point x="-25.125" y="15.0" />
+    </edge>
+    <edge source="com.example1.OpperationFactory" target="com.example1.IntegerMultiplicationComputer">
+      <point x="-21.285714285714334" y="-15.0" />
+      <point x="354.96428571428567" y="130.0" />
+      <point x="268.75" y="130.0" />
+      <point x="-53.75" y="15.0" />
+    </edge>
+    <edge source="com.example1.IntegerComputer" target="com.example1.OpperationFactory">
+      <point x="35.25" y="-15.0" />
+      <point x="338.25" y="225.0" />
+      <point x="376.25" y="225.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.example1.OpperationFactory" target="com.example1.IntegerSumComputer">
+      <point x="21.285714285714278" y="-15.0" />
+      <point x="397.5357142857143" y="130.0" />
+      <point x="491.25" y="130.0" />
+      <point x="-41.25" y="15.0" />
+    </edge>
+    <edge source="com.example1.IntegerComputer" target="com.example1.Computer">
+      <point x="-35.25" y="-15.0" />
+      <point x="267.75" y="225.0" />
+      <point x="229.75" y="225.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.example1.OpperationFactory" target="com.example1.IntegerOpperationComputer">
+      <point x="63.85714285714283" y="-15.0" />
+      <point x="440.10714285714283" y="150.0" />
+      <point x="625.5" y="150.0" />
+      <point x="625.5" y="50.0" />
+      <point x="509.296875" y="50.0" />
+      <point x="75.37500000000001" y="15.0" />
+    </edge>
+    <edge source="com.example1.IntegerDifferenceComputer" target="com.example1.IntegerOpperationComputer">
+      <point x="0.0" y="-15.0" />
+      <point x="97.5" y="50.0" />
+      <point x="358.546875" y="50.0" />
+      <point x="-75.375" y="15.0" />
+    </edge>
+    <edge source="com.example1.OpperationFactory" target="com.example1.IntegerDifferenceComputer">
+      <point x="-63.85714285714289" y="-15.0" />
+      <point x="312.3928571428571" y="150.0" />
+      <point x="48.75" y="150.0" />
+      <point x="-48.75" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="351.0" y="181.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

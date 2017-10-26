@@ -21,19 +21,32 @@ public class MyBenchMark {
     public int size;
 
     @Benchmark
-    public void array_add(Blackhole consummer){
-        consummer.consume(Stream.iterate(0, id -> {return id++;})
-                .limit(size)
+    public void array_add(Blackhole consummer,MyState state){
+        ArrayListBasedRepositpory<Order> orders = new ArrayListBasedRepositpory<>();
 
-        );
+        for(int i=0; i<size;i++){
+            orders.add(new Order(i,10,10));
+        }
+
+        consummer.consume(orders);
     }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(MyBenchMark.class.getSimpleName())
-                .forks(1)
                 .build();
 
         new Runner(opt).run();
     }
+
+    //java -jar target/benchmarks.jar JMHSample_26 -f 1
+
+    @State(Scope.Thread)
+    class MyState{
+        //setUp
+        //tailDown
+    }
+
 }
+
+
