@@ -1,6 +1,8 @@
 package com.jenkov;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HashSetBasedRepository<T> implements InMemoryRepository<T> {
@@ -23,5 +25,10 @@ public class HashSetBasedRepository<T> implements InMemoryRepository<T> {
     @Override
     public boolean contains(T element) {
         return (arr.contains(element));
+    }
+
+    @Override
+    public List<T> getAll() {
+        return new ArrayList<>(arr);
     }
 }

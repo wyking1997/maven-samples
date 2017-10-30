@@ -7,20 +7,22 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(1)
 @State(Scope.Benchmark)
 public class MyBenchMark {
-    @Param({"1", "50", "100", "200", "1000", "10000"})
+    @Param({"1", "10"})
     public int size;
 
     @Benchmark
-    public void arrayAdd(Blackhole consummer,MyState state){
+    public void arrayAdd(Blackhole consummer,ArrayListRepo state){
         ArrayListBasedRepositpory<Order> orders = new ArrayListBasedRepositpory<>();
 
         for(int i=0; i<size;i++){
@@ -40,10 +42,83 @@ public class MyBenchMark {
 
     //java -jar target/benchmarks.jar JMHSample_26 -f 1
 
-    @State(Scope.Thread)
-    class MyState{
-        //setUp
-        //tailDown
+    @State(Scope.Benchmark)
+    public static class ArrayListRepo{
+        ArrayListBasedRepositpory<Order> list = new ArrayListBasedRepositpory<>();
+        private Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new ArrayListBasedRepositpory();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
+    @State(Scope.Benchmark)
+    public static class HashSetRepo{
+        HashSetBasedRepository<Order> list = new HashSetBasedRepository<>();
+        Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new HashSetBasedRepository<>();
+            IntStream.rangeClosed(0, 20000)
+                .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
+    @State(Scope.Benchmark)
+    public static class TreeSetRepo{
+        TreeSetBasedRepository<Order> list = new TreeSetBasedRepository<>();
+        Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new TreeSetBasedRepository();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
     }
 
 }

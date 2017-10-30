@@ -24,4 +24,9 @@ public class ArrayListBasedRepositpory<T> implements InMemoryRepository<T> {
     public boolean contains(T element) {
         return (arr.contains(element));
     }
+
+    @Override
+    public List<T> getAll() {
+        return arr;
+    }
 }
