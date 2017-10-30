@@ -1,6 +1,6 @@
 package com.jenkov;
 
-public class Order {
+public class Order implements Comparable{
     private int id;
     private int price;
     private int quatity;
@@ -55,5 +55,14 @@ public class Order {
 
     public void setQuatity(int quatity) {
         this.quatity = quatity;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (!(o instanceof Order))
+            throw new RuntimeException("Expected order object!");
+        Order ord = (Order) o;
+        return (this.id < ord.id ? -1 :
+                (this.id == ord.id ? 0 : 1));
     }
 }

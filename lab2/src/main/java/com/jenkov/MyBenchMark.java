@@ -21,16 +21,24 @@ public class MyBenchMark {
     @Param({"1", "10"})
     public int size;
 
+    //ADD METHODS
     @Benchmark
-    public void arrayAdd(Blackhole consummer,ArrayListRepo state){
-        ArrayListBasedRepositpory<Order> orders = new ArrayListBasedRepositpory<>();
-
-        for(int i=0; i<size;i++){
-            orders.add(new Order(i,10,10));
-        }
-
-        consummer.consume(orders);
+    public void hashSetAdd(HashSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
+    @Benchmark
+    public void treeSetAdd(TreeSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void arrayListAdd(ArrayListRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+
+
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
