@@ -38,23 +38,42 @@ public class MyBenchMark {
 //                .forEach(el -> state.list.add(new Order(el, 10, 10)));
 //    }
 
-    //CONTAINS METHODS
-    @Benchmark
-    public void arrayListContains(Blackhole consummer, ArrayListRepo state){
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-    }
-    @Benchmark
-    public void treeSetContains(Blackhole consummer, TreeSetRepo state){
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-    }
-    @Benchmark
-    public void hashSetContains(Blackhole consummer, HashSetRepo state){
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-    }
+//    //CONTAINS METHODS
+//    @Benchmark
+//    public void arrayListContains(Blackhole consummer, ArrayListRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+//    }
+//    @Benchmark
+//    public void treeSetContains(Blackhole consummer, TreeSetRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+//    }
+//    @Benchmark
+//    public void hashSetContains(Blackhole consummer, HashSetRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+//    }
 
+    //REMOVE METHODS
+    @Benchmark
+    public void arrayListRemove(ArrayListRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+    @Benchmark
+    public void treeSetRemove(TreeSetRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+    @Benchmark
+    public void hashSetRemove(HashSetRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
 
 
     public static void main(String[] args) throws RunnerException {
