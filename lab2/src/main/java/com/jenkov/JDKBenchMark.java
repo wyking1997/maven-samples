@@ -75,24 +75,41 @@ public class JDKBenchMark {
 //        }
 //    }
 
-    //CONCURENT HASH MAP BASED REPOSITORY
+//    //CONCURENT HASH MAP BASED REPOSITORY
+//    @Benchmark
+//    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+//    }
+//    @Benchmark
+//    public void concurentHashMapContains(Blackhole consummer, ConcurrentHashMapRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+//    }
+//    @Benchmark
+//    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
+//        for (int i = 0; i < size; i++){
+//            state.list.remove(state.getExisting());
+//        }
+//    }
+
+    //Eclipse Collections Bag Repo
     @Benchmark
-    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
+    public void concurentHashMapAdd(GcBagRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
     @Benchmark
-    public void concurentHashMapContains(Blackhole consummer, ConcurrentHashMapRepo state){
+    public void concurentHashMapContains(Blackhole consummer, GcBagRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
+    public void concurentHashMapRemove(GcBagRepo state){
         for (int i = 0; i < size; i++){
             state.list.remove(state.getExisting());
         }
     }
-
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
@@ -106,7 +123,7 @@ public class JDKBenchMark {
 
     @State(Scope.Benchmark)
     public static class ArrayListRepo{
-        ArrayListBasedRepositpory<Order> list = new ArrayListBasedRepositpory<>();
+        ArrayListBasedRepositpory<Order> list;
         private Random random = new Random();
 
         @Setup(Level.Invocation)
@@ -132,7 +149,7 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class HashSetRepo{
-        HashSetBasedRepository<Order> list = new HashSetBasedRepository<>();
+        HashSetBasedRepository<Order> list;
         Random random = new Random();
 
         @Setup(Level.Invocation)
@@ -158,7 +175,7 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class TreeSetRepo{
-        TreeSetBasedRepository<Order> list = new TreeSetBasedRepository<>();
+        TreeSetBasedRepository<Order> list;
         Random random = new Random();
 
         @Setup(Level.Invocation)
@@ -184,7 +201,7 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class ConcurrentHashMapRepo{
-        ConcurentHashMapBasedRepository<Order> list = new ConcurentHashMapBasedRepository<>();
+        ConcurentHashMapBasedRepository<Order> list;
         Random random = new Random();
 
         @Setup(Level.Invocation)
@@ -208,7 +225,31 @@ public class JDKBenchMark {
             return list.getAll().get(random.nextInt(list.getAll().size()));
         }
     }
+    @State(Scope.Benchmark)
+    public static class GcBagRepo{
+        GcBagBasedRepo<Order> list;
+        Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new GcBagBasedRepo<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
 
 }
-
-
