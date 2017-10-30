@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(1)
 @State(Scope.Benchmark)
-public class MyBenchMark {
+public class JDKBenchMark {
     @Param({"1", "10"})
     public int size;
 
@@ -55,21 +55,39 @@ public class MyBenchMark {
 //                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
 //    }
 
-    //REMOVE METHODS
+//    //REMOVE METHODS
+//    @Benchmark
+//    public void arrayListRemove(ArrayListRepo state){
+//        for (int i = 0; i < size; i++){
+//            state.list.remove(state.getExisting());
+//        }
+//    }
+//    @Benchmark
+//    public void treeSetRemove(TreeSetRepo state){
+//        for (int i = 0; i < size; i++){
+//            state.list.remove(state.getExisting());
+//        }
+//    }
+//    @Benchmark
+//    public void hashSetRemove(HashSetRepo state){
+//        for (int i = 0; i < size; i++){
+//            state.list.remove(state.getExisting());
+//        }
+//    }
+
+    //CONCURENT HASH MAP BASED REPOSITORY
     @Benchmark
-    public void arrayListRemove(ArrayListRepo state){
-        for (int i = 0; i < size; i++){
-            state.list.remove(state.getExisting());
-        }
+    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
     @Benchmark
-    public void treeSetRemove(TreeSetRepo state){
-        for (int i = 0; i < size; i++){
-            state.list.remove(state.getExisting());
-        }
+    public void concurentHashMapContains(Blackhole consummer, ConcurrentHashMapRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void hashSetRemove(HashSetRepo state){
+    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
         for (int i = 0; i < size; i++){
             state.list.remove(state.getExisting());
         }
@@ -78,7 +96,7 @@ public class MyBenchMark {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(MyBenchMark.class.getSimpleName())
+                .include(JDKBenchMark.class.getSimpleName())
                 .build();
 
         new Runner(opt).run();
@@ -146,6 +164,32 @@ public class MyBenchMark {
         @Setup(Level.Invocation)
         public void doSetup() {
             list = new TreeSetBasedRepository();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
+    @State(Scope.Benchmark)
+    public static class ConcurrentHashMapRepo{
+        ConcurentHashMapBasedRepository<Order> list = new ConcurentHashMapBasedRepository<>();
+        Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new ConcurentHashMapBasedRepository();
             IntStream.rangeClosed(0, 20000)
                     .forEach(el -> list.add(new Order(el, 10, 10)));
         }
