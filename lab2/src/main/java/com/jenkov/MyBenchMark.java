@@ -21,21 +21,38 @@ public class MyBenchMark {
     @Param({"1", "10"})
     public int size;
 
-    //ADD METHODS
+//    //ADD METHODS
+//    @Benchmark
+//    public void hashSetAdd(HashSetRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+//    }
+//    @Benchmark
+//    public void treeSetAdd(TreeSetRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+//    }
+//    @Benchmark
+//    public void arrayListAdd(ArrayListRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+//    }
+
+    //CONTAINS METHODS
     @Benchmark
-    public void hashSetAdd(HashSetRepo state){
+    public void arrayListContains(Blackhole consummer, ArrayListRepo state){
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void treeSetAdd(TreeSetRepo state){
+    public void treeSetContains(Blackhole consummer, TreeSetRepo state){
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void arrayListAdd(ArrayListRepo state){
+    public void hashSetContains(Blackhole consummer, HashSetRepo state){
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
 
 
