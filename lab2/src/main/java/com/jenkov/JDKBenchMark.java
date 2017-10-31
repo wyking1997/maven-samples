@@ -21,7 +21,7 @@ public class JDKBenchMark {
     @Param({"1", "10"})
     public int size;
 
-//    //ADD METHODS
+//    // ADD METHODS
 //    @Benchmark
 //    public void hashSetAdd(HashSetRepo state){
 //        IntStream.rangeClosed(0, size)
@@ -75,7 +75,7 @@ public class JDKBenchMark {
 //        }
 //    }
 
-//    //CONCURENT HASH MAP BASED REPOSITORY
+//    // CONCURENT HASH MAP BASED REPOSITORY
 //    @Benchmark
 //    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
 //        IntStream.rangeClosed(0, size)
@@ -93,19 +93,45 @@ public class JDKBenchMark {
 //        }
 //    }
 
-    //Eclipse Collections Bag Repo
+//    // Eclipse Collections Bag Repo
+//    @Benchmark
+//    public void concurentHashMapAdd(GcBagRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+//    }
+//    @Benchmark
+//    public void concurentHashMapContains(Blackhole consummer, GcBagRepo state){
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+//    }
+//    @Benchmark
+//    public void concurentHashMapRemove(GcBagRepo state){
+//        for (int i = 0; i < size; i++){
+//            state.list.remove(state.getExisting());
+//        }
+//    }
+//
+//    public static void main(String[] args) throws RunnerException {
+//        Options opt = new OptionsBuilder()
+//                .include(JDKBenchMark.class.getSimpleName())
+//                .build();
+//
+//        new Runner(opt).run();
+//    }
+
+    // Koloboke hash map with primitive int
     @Benchmark
-    public void concurentHashMapAdd(GcBagRepo state){
+    public void kolobokeHashMapAdd(GcBagRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
     @Benchmark
-    public void concurentHashMapContains(Blackhole consummer, GcBagRepo state){
+    public void kolobokeHashMapContains(Blackhole consummer, GcBagRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void concurentHashMapRemove(GcBagRepo state){
+    public void kolobokeHashMapRemove(GcBagRepo state){
         for (int i = 0; i < size; i++){
             state.list.remove(state.getExisting());
         }
@@ -118,6 +144,8 @@ public class JDKBenchMark {
 
         new Runner(opt).run();
     }
+
+
 
     //java -jar target/benchmarks.jar JMHSample_26 -f 1
 
@@ -251,5 +279,30 @@ public class JDKBenchMark {
             return list.getAll().get(random.nextInt(list.getAll().size()));
         }
     }
+    @State(Scope.Benchmark)
+    public static class KolobokeHashRepo{
+        KolobokeHashBasedRepo<Order> list;
+        Random random = new Random();
 
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new KolobokeHashBasedRepo<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
 }
