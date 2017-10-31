@@ -18,158 +18,142 @@ import java.util.stream.IntStream;
 @Fork(1)
 @State(Scope.Benchmark)
 public class JDKBenchMark {
-    @Param({"1", "10"})
+    @Param({"1", "10", "50"})
     public int size;
 
-//    // ADD METHODS
-//    @Benchmark
-//    public void hashSetAdd(HashSetRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void treeSetAdd(TreeSetRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void arrayListAdd(ArrayListRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JDKBenchMark.class.getSimpleName())
+                .build();
 
-//    //CONTAINS METHODS
-//    @Benchmark
-//    public void arrayListContains(Blackhole consummer, ArrayListRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void treeSetContains(Blackhole consummer, TreeSetRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void hashSetContains(Blackhole consummer, HashSetRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
+        new Runner(opt).run();
+    }
 
-//    //REMOVE METHODS
-//    @Benchmark
-//    public void arrayListRemove(ArrayListRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//    @Benchmark
-//    public void treeSetRemove(TreeSetRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//    @Benchmark
-//    public void hashSetRemove(HashSetRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
+    // ADD METHODS
+    @Benchmark
+    public void hashSetAdd(HashSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void treeSetAdd(TreeSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void arrayListAdd(ArrayListRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
 
-//    // CONCURENT HASH MAP BASED REPOSITORY
-//    @Benchmark
-//    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void concurentHashMapContains(Blackhole consummer, ConcurrentHashMapRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
+    //CONTAINS METHODS
+    @Benchmark
+    public void arrayListContains(Blackhole consummer, ArrayListRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void treeSetContains(Blackhole consummer, TreeSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void hashSetContains(Blackhole consummer, HashSetRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
 
-//    // Eclipse Collections Bag Repo
-//    @Benchmark
-//    public void concurentHashMapAdd(GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void concurentHashMapContains(Blackhole consummer, GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void concurentHashMapRemove(GcBagRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
-//    public static void main(String[] args) throws RunnerException {
-//        Options opt = new OptionsBuilder()
-//                .include(JDKBenchMark.class.getSimpleName())
-//                .build();
-//
-//        new Runner(opt).run();
-//    }
+    //REMOVE METHODS
+    @Benchmark
+    public void arrayListRemove(ArrayListRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+    @Benchmark
+    public void treeSetRemove(TreeSetRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+    @Benchmark
+    public void hashSetRemove(HashSetRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
 
-//    // Koloboke hash map with primitive int
-//    @Benchmark
-//    public void kolobokeHashMapAdd(GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void kolobokeHashMapContains(Blackhole consummer, GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void kolobokeHashMapRemove(GcBagRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
-//    public static void main(String[] args) throws RunnerException {
-//        Options opt = new OptionsBuilder()
-//                .include(JDKBenchMark.class.getSimpleName())
-//                .build();
-//
-//        new Runner(opt).run();
-//    }
+    // CONCURENT HASH MAP BASED REPOSITORY
+    @Benchmark
+    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void concurentHashMapContains(Blackhole consummer, ConcurrentHashMapRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
 
-//    // Trove4j hash map with primitive int
-//    @Benchmark
-//    public void troveHashSetAdd(TroveHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void troveHashSetContains(Blackhole consummer, TroveHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void troveHashSetRemove(TroveHashRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
-//    public static void main(String[] args) throws RunnerException {
-//        Options opt = new OptionsBuilder()
-//                .include(JDKBenchMark.class.getSimpleName())
-//                .build();
-//
-//        new Runner(opt).run();
-//    }
+    // Eclipse Collections Bag Repo
+    @Benchmark
+    public void gcConcurentHashMapAdd(GcBagRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void gcConcurentHashMapContains(Blackhole consummer, GcBagRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void gcConcurentHashMapRemove(GcBagRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+
+    // Koloboke hash map with primitive int
+    @Benchmark
+    public void kolobokeHashMapAdd(GcBagRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void kolobokeHashMapContains(Blackhole consummer, GcBagRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void kolobokeHashMapRemove(GcBagRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+
+    // Trove4j hash map with primitive int
+    @Benchmark
+    public void troveHashSetAdd(TroveHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void troveHashSetContains(Blackhole consummer, TroveHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void troveHashSetRemove(TroveHashRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
 
     // HastUtil hash set
     @Benchmark
@@ -188,16 +172,6 @@ public class JDKBenchMark {
             state.list.remove(state.getExisting());
         }
     }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JDKBenchMark.class.getSimpleName())
-                .build();
-
-        new Runner(opt).run();
-    }
-
-
 
     //java -jar target/benchmarks.jar JMHSample_26 -f 1
 
