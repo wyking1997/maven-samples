@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GcBagBasedRepo<T> implements InMemoryRepository<T> {
 
-    HashBag<T> bag;
+    private HashBag<T> bag;
 
     public GcBagBasedRepo() {
         this.bag = HashBag.newBag();

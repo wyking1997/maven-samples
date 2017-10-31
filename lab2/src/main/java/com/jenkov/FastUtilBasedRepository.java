@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class FastUtilBasedRepository<T> implements InMemoryRepository<T>{
 
-    Set<T> set;
+    private Set<T> set;
 
     public FastUtilBasedRepository() {
         this.set = new ObjectOpenHashSet<T>();

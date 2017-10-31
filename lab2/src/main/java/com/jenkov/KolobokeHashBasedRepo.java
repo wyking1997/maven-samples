@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class KolobokeHashBasedRepo<T> implements InMemoryRepository<T> {
 
-    Map<Integer, T> map = HashIntObjMaps.newMutableMap();
+    private Map<Integer, T> map = HashIntObjMaps.newMutableMap();
 
     @Override
     public void add(T element) {

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Tove4jHashMapBasedRepository<T> implements InMemoryRepository<T> {
 
-    Set<T> set;
+    private Set<T> set;
 
     public Tove4jHashMapBasedRepository() {
         this.set = new THashSet<>();
