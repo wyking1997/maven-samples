@@ -1,6 +1,5 @@
 package com.jenkov;
 
-import com.gs.collections.api.bag.MutableBag;
 import org.eclipse.collections.impl.bag.mutable.HashBag;
 
 import java.util.List;
