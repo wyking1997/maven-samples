@@ -1,19 +1,21 @@
 package com.example1;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OpperationFactory {
 
-    private static IntegerSumComputer integerSumComputer = new IntegerSumComputer();
-    private static IntegerDifferenceComputer integerDifferenceComputer = new IntegerDifferenceComputer();
-    private static IntegerMultiplicationComputer integerMultiplicationComputer = new IntegerMultiplicationComputer();
+    private static final Map<String, IntegerOpperationComputer> oppComputers;
+    static {
+        Map<String, IntegerOpperationComputer> myMap = new HashMap<>();
+        myMap.put("+", new IntegerSumComputer());
+        myMap.put("-", new IntegerDifferenceComputer());
+        myMap.put("*", new IntegerMultiplicationComputer());
+        oppComputers = Collections.unmodifiableMap(myMap);
+    }
 
     public static IntegerOpperationComputer getOperation(String opperand){
-        switch (opperand){
-            case "+": return integerSumComputer;
-            case "-": return integerDifferenceComputer;
-            case "*": return integerMultiplicationComputer;
-            default: throw new NotImplementedException();
-        }
+        return oppComputers.get(opperand);
     }
 }
