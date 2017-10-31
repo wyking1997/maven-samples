@@ -59,8 +59,6 @@ public class Order implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if (!(o instanceof Order))
-            throw new RuntimeException("Expected order object!");
         Order ord = (Order) o;
         return (this.id < ord.id ? -1 :
                 (this.id == ord.id ? 0 : 1));

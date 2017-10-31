@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ConcurentHashMapBasedRepository<T> implements InMemoryRepository<T> {
-    Map<Integer, T> map;
+    private Map<Integer, T> map;
 
     public ConcurentHashMapBasedRepository() {
         this.map = new ConcurrentHashMap<>();
