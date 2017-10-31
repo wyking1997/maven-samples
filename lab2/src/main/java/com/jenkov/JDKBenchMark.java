@@ -177,7 +177,7 @@ public class JDKBenchMark {
 
     @State(Scope.Benchmark)
     public static class ArrayListRepo{
-        ArrayListBasedRepositpory<Order> list;
+        private ArrayListBasedRepositpory<Order> list;
         private Random random = new Random();
 
         @Setup(Level.Invocation)
@@ -203,8 +203,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class HashSetRepo{
-        HashSetBasedRepository<Order> list;
-        Random random = new Random();
+        private HashSetBasedRepository<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -229,8 +229,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class TreeSetRepo{
-        TreeSetBasedRepository<Order> list;
-        Random random = new Random();
+        private TreeSetBasedRepository<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -255,8 +255,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class ConcurrentHashMapRepo{
-        ConcurentHashMapBasedRepository<Order> list;
-        Random random = new Random();
+        private ConcurentHashMapBasedRepository<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -281,8 +281,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class GcBagRepo{
-        GcBagBasedRepo<Order> list;
-        Random random = new Random();
+        private GcBagBasedRepo<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -307,8 +307,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class KolobokeHashRepo{
-        KolobokeHashBasedRepo<Order> list;
-        Random random = new Random();
+        private KolobokeHashBasedRepo<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -333,8 +333,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class TroveHashRepo{
-        Tove4jHashMapBasedRepository<Order> list;
-        Random random = new Random();
+        private Tove4jHashMapBasedRepository<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
@@ -359,8 +359,8 @@ public class JDKBenchMark {
     }
     @State(Scope.Benchmark)
     public static class FastUtilHashRepo{
-        FastUtilBasedRepository<Order> list;
-        Random random = new Random();
+        private FastUtilBasedRepository<Order> list;
+        private Random random = new Random();
 
         @Setup(Level.Invocation)
         public void doSetup() {
