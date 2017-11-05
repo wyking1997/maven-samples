@@ -7,10 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>lab2</artifactId>
+	<artifactId>lab3</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Lab 2</name>
+	<name>Lab 3</name>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>

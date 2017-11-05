@@ -1,5 +1,6 @@
-package com.jenkov;
+package com.jenkov.repo.implementation;
 
+import com.jenkov.repo.specification.InMemoryRepository;
 import org.eclipse.collections.impl.bag.mutable.HashBag;
 
 import java.util.List;

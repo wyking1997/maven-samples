@@ -1,12 +1,13 @@
-package com.jenkov;
+package com.jenkov.repo.implementation;
 
+import com.jenkov.repo.specification.InMemoryRepository;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class FastUtilBasedRepository<T> implements InMemoryRepository<T>{
+public class FastUtilBasedRepository<T> implements InMemoryRepository<T> {
 
     private Set<T> set;
 

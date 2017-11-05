@@ -1,15 +1,17 @@
-package com.jenkov;
+package com.jenkov.repo.implementation;
+
+import com.jenkov.repo.specification.InMemoryRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
-public class TreeSetBasedRepository<T> implements InMemoryRepository<T> {
+public class HashSetBasedRepository<T> implements InMemoryRepository<T> {
     private Set<T> arr;
 
-    public TreeSetBasedRepository() {
-        this.arr = new TreeSet<>();
+    public HashSetBasedRepository() {
+        this.arr = new HashSet<>();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.jenkov;
+package com.jenkov.model;
 
 public class Order implements Comparable{
     private int id;
@@ -62,5 +62,14 @@ public class Order implements Comparable{
         Order ord = (Order) o;
         return (this.id < ord.id ? -1 :
                 (this.id == ord.id ? 0 : 1));
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", price=" + price +
+                ", quatity=" + quatity +
+                '}';
     }
 }

@@ -1,14 +1,15 @@
-package com.jenkov;
+package com.jenkov.repo.implementation;
 
+import com.jenkov.repo.specification.InMemoryRepository;
+import com.koloboke.collect.map.hash.HashIntObjMap;
 import com.koloboke.collect.map.hash.HashIntObjMaps;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class KolobokeHashBasedRepo<T> implements InMemoryRepository<T> {
 
-    private Map<Integer, T> map = HashIntObjMaps.newMutableMap();
+    private HashIntObjMap map = HashIntObjMaps.newMutableMap();
 
     @Override
     public void add(T element) {

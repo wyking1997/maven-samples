@@ -1,4 +1,4 @@
-package com.jenkov;
+package com.jenkov.repo.specification;
 
 import java.util.List;
 
