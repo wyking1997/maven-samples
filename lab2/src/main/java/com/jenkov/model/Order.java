@@ -23,7 +23,7 @@ public class Order implements Comparable{
 
     @Override
     public int hashCode() {
-        return id;
+        return id * 31 + price * 71 + quatity * 131;
     }
 
     public int compareTo(Order order){
