@@ -4,8 +4,6 @@ import com.jenkov.repo.specification.primitive.IntInMemoryRepository;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TIntArrayList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Tove4jHashMapBasedRepository implements IntInMemoryRepository {

@@ -7,6 +7,7 @@ import com.jenkov.repo.implementation.primitive.FastUtilBasedRepository;
 import com.jenkov.repo.implementation.primitive.GcBagBasedRepo;
 import com.jenkov.repo.implementation.primitive.Tove4jHashMapBasedRepository;
 import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
+import com.jenkov.repo.specification.primitive.IntInMemoryRepository;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -100,7 +101,7 @@ public class JDKBenchMark {
 //                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
 //    }
 
-//    // CONCURENT HASH MAP BASED REPOSITORY
+    //    // CONCURENT HASH MAP BASED REPOSITORY
 //    @Benchmark
 //    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
 //        state.type = OperationType.ADD;
@@ -113,275 +114,312 @@ public class JDKBenchMark {
 //        IntStream.rangeClosed(0, size)
 //                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
 //    }
+//    @Benchmark
+//    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
+//        state.type = OperationType.REMOVE;
+//        state.id = state.random.nextInt(state.list.getAll().size() - size);
+//        IntStream.rangeClosed(0, size)
+//                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
+//    }
+//
+    // Eclipse Collections Bag Repo
     @Benchmark
-    public void concurentHashMapRemove(ConcurrentHashMapRepo state){
-        state.type = OperationType.REMOVE;
-        state.id = state.random.nextInt(state.list.getAll().size() - size);
+    public void gcConcurentHashMapAdd(GcBagRepo state){
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
-//
-//    // Eclipse Collections Bag Repo
-//    @Benchmark
-//    public void gcConcurentHashMapAdd(GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void gcConcurentHashMapContains(Blackhole consummer, GcBagRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void gcConcurentHashMapRemove(GcBagRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
-//    // Koloboke hash map with primitive int
+    @Benchmark
+    public void gcConcurentHashMapContains(Blackhole consummer, GcBagRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void gcConcurentHashMapRemove(GcBagRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+
+    // Koloboke hash map with primitive int
     @Benchmark
     public void kolobokeHashMapAdd(KolobokeHashRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
-//    @Benchmark
-//    public void kolobokeHashMapContains(Blackhole consummer, KolobokeHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void kolobokeHashMapRemove(KolobokeHashRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
+    @Benchmark
+    public void kolobokeHashMapContains(Blackhole consummer, KolobokeHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void kolobokeHashMapRemove(KolobokeHashRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
+    }
+
     // Trove4j hash map with primitive int
     @Benchmark
     public void troveHashSetAdd(TroveHashRepo state){
         IntStream.rangeClosed(0, size)
                 .forEach(el -> state.list.add(new Order(el, 10, 10)));
     }
-//    @Benchmark
-//    public void troveHashSetContains(Blackhole consummer, TroveHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void troveHashSetRemove(TroveHashRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-//
-//    // HastUtil hash set
-//    @Benchmark
-//    public void fastUtilHashSetAdd(FastUtilHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
-//    @Benchmark
-//    public void fastUtilHashSetContains(Blackhole consummer, FastUtilHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-//    }
-//    @Benchmark
-//    public void fastUtilHashSetRemove(FastUtilHashRepo state){
-//        for (int i = 0; i < size; i++){
-//            state.list.remove(state.getExisting());
-//        }
-//    }
-
-//java -jar target/benchmarks.jar JMHSample_26 -f 1
-public static abstract class AbstactState{
-    protected InMemoryRepository<Order> list;
-    protected Random random = new Random();
-    protected int id;
-    protected OperationType type;
-
-    @Setup(Level.Invocation)
-    public void doSetuppppppppppp() {
-        id = 2000000;
+    @Benchmark
+    public void troveHashSetContains(Blackhole consummer, TroveHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
-
-    @TearDown(Level.Invocation)
-    public void doTearDownnnnnnnnn() {
-//        System.out.println("\n\n\n\n\n");
-//        System.out.println(this.list.getAll().size());
-        switch (type){
-            case ADD: {
-                IntStream.rangeClosed(0, JDKBenchMark.size)
-                        .forEach( el -> {
-                            list.remove(new Order(el + id, 10, 10));
-                        });
-                return;
-            }
-            case REMOVE: {
-                IntStream.rangeClosed(0, JDKBenchMark.size)
-                        .forEach( el -> {
-                            list.add(new Order(el + id, 10, 10));
-                        });
-                return;
-            }
-            case CONTAINS: {return;}
-            default: return;
+    @Benchmark
+    public void troveHashSetRemove(TroveHashRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
         }
     }
 
-    @TearDown(Level.Iteration)
-    public void doTearDown2() {
-        list = null;
-        System.gc();
+    // HastUtil hash set
+    @Benchmark
+    public void fastUtilHashSetAdd(FastUtilHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
+    @Benchmark
+    public void fastUtilHashSetContains(Blackhole consummer, FastUtilHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+    }
+    @Benchmark
+    public void fastUtilHashSetRemove(FastUtilHashRepo state){
+        for (int i = 0; i < size; i++){
+            state.list.remove(state.getExisting());
+        }
     }
 
-    public Order getRandomElement(){
-        return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                : new Order(random.nextInt(), 10, 10));
-    }
-}
+    //java -jar target/benchmarks.jar JMHSample_26 -f 1
+    public static abstract class AbstactState{
+        protected InMemoryRepository<Order> list;
+        protected Random random = new Random();
+        protected int id;
+        protected OperationType type;
 
-@State(Scope.Benchmark)
-public static class ArrayListRepo extends AbstactState{
-    @Setup(Level.Iteration)
-    public void doSetup() {
-        list = new ArrayListBasedRepositpory();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
-}
+        @Setup(Level.Invocation)
+        public void doSetuppppppppppp() {
+            id = 2000000;
+        }
 
-@State(Scope.Benchmark)
-public static class HashSetRepo extends AbstactState{
-    @Setup(Level.Iteration)
-    public void doSetup() {
-        list = new HashSetBasedRepository<>();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
-}
+        @TearDown(Level.Invocation)
+        public void doTearDownnnnnnnnn() {
+            switch (type){
+                case ADD: {
+                    IntStream.rangeClosed(0, JDKBenchMark.size)
+                            .forEach( el -> {
+                                list.remove(new Order(el + id, 10, 10));
+                            });
+                    return;
+                }
+                case REMOVE: {
+                    IntStream.rangeClosed(0, JDKBenchMark.size)
+                            .forEach( el -> {
+                                list.add(new Order(el + id, 10, 10));
+                            });
+                    return;
+                }
+                case CONTAINS: {return;}
+                default: return;
+            }
+        }
 
-@State(Scope.Benchmark)
-public static class TreeSetRepo extends AbstactState{
-    @Setup(Level.Iteration)
-    public void doSetup() {
-        list = new TreeSetBasedRepository();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
-}
-@State(Scope.Benchmark)
-public static class ConcurrentHashMapRepo extends AbstactState{
-    @Setup(Level.Iteration)
-    public void doSetup() {
-        list = new ConcurentHashMapBasedRepository();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
-}
-@State(Scope.Benchmark)
-public static class GcBagRepo{
-    private GcBagBasedRepo<Order> list;
-    private Random random = new Random();
+        @TearDown(Level.Iteration)
+        public void doTearDown2() {
+            list = null;
+            System.gc();
+        }
 
-    @Setup(Level.Invocation)
-    public void doSetup() {
-        list = new GcBagBasedRepo<>();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
     }
 
-    @TearDown(Level.Invocation)
-    public void doTearDown() {
-        list = null;
-        System.gc();
+    public static abstract class AbstactIntState{
+        protected IntInMemoryRepository repo;
+        protected Random random = new Random();
+        protected int element;
+        protected OperationType type;
+
+        @Setup(Level.Invocation)
+        public void doSetuppppppppppp() {
+            element = 2000000;
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDownnnnnnnnn() {
+            switch (type){
+                case ADD: {
+                    IntStream.rangeClosed(0, JDKBenchMark.size).forEach(el -> repo.remove(el));
+                    return;
+                }
+                case REMOVE: {
+                    IntStream.rangeClosed(0, JDKBenchMark.size).forEach(el -> repo.add(el));
+                    return;
+                }
+                case CONTAINS: {return;}
+                default: return;
+            }
+        }
+
+        @TearDown(Level.Iteration)
+        public void doTearDown2() {
+            repo = null;
+            System.gc();
+        }
+
+        public int getRandomElement(){
+            return repo.getRandomElement(random);
+        }
     }
 
-    public Order getRandomElement(){
-        return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                : new Order(random.nextInt(), 10, 10));
-    }
-    public Order getExisting(){
-        return list.getAll().get(random.nextInt(list.getAll().size()));
-    }
-}
-@State(Scope.Benchmark)
-public static class KolobokeHashRepo{
-    private KolobokeHashBasedRepo<Order> list;
-    private Random random = new Random();
 
-    @Setup(Level.Invocation)
-    public void doSetup() {
-        list = new KolobokeHashBasedRepo<>();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
+    @State(Scope.Benchmark)
+    public static class ArrayListRepo extends AbstactState{
+        @Setup(Level.Iteration)
+        public void doSetup() {
+            list = new ArrayListBasedRepositpory();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
     }
 
-    @TearDown(Level.Invocation)
-    public void doTearDown() {
-        list = null;
-        System.gc();
+    @State(Scope.Benchmark)
+    public static class HashSetRepo extends AbstactState{
+        @Setup(Level.Iteration)
+        public void doSetup() {
+            list = new HashSetBasedRepository<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
     }
 
-    public Order getRandomElement(){
-        return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                : new Order(random.nextInt(), 10, 10));
+    @State(Scope.Benchmark)
+    public static class TreeSetRepo extends AbstactState{
+        @Setup(Level.Iteration)
+        public void doSetup() {
+            list = new TreeSetBasedRepository();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
     }
-    public Order getExisting(){
-        return list.getAll().get(random.nextInt(list.getAll().size()));
+    @State(Scope.Benchmark)
+    public static class ConcurrentHashMapRepo extends AbstactState{
+        @Setup(Level.Iteration)
+        public void doSetup() {
+            list = new ConcurentHashMapBasedRepository();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
     }
-}
-@State(Scope.Benchmark)
-public static class TroveHashRepo{
-    private Tove4jHashMapBasedRepository<Order> list;
-    private Random random = new Random();
+    @State(Scope.Benchmark)
+    public static class GcBagRepo{
+        private GcBagBasedRepo list;
+        private Random random = new Random();
 
-    @Setup(Level.Invocation)
-    public void doSetup() {
-        list = new Tove4jHashMapBasedRepository<>();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new GcBagBasedRepo();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(el));
+        }
 
-    @TearDown(Level.Invocation)
-    public void doTearDown() {
-        list = null;
-        System.gc();
-    }
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
 
-    public Order getRandomElement(){
-        return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                : new Order(random.nextInt(), 10, 10));
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
     }
-    public Order getExisting(){
-        return list.getAll().get(random.nextInt(list.getAll().size()));
-    }
-}
-@State(Scope.Benchmark)
-public static class FastUtilHashRepo{
-    private FastUtilBasedRepository<Order> list;
-    private Random random = new Random();
-    private Order ord;
+    @State(Scope.Benchmark)
+    public static class KolobokeHashRepo{
+        private KolobokeHashBasedRepo<Order> list;
+        private Random random = new Random();
 
-    @Setup(Level.Invocation)
-    public void doSetup() {
-        list = new FastUtilBasedRepository<>();
-        IntStream.rangeClosed(0, 20000)
-                .forEach(el -> list.add(new Order(el, 10, 10)));
-    }
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new KolobokeHashBasedRepo<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
 
-    @TearDown(Level.Invocation)
-    public void doTearDown() {
-        list = null;
-        System.gc();
-    }
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
 
-    public Order getRandomElement(){
-        return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                : new Order(random.nextInt(), 10, 10));
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
     }
-    public Order getExisting(){
-        return list.getAll().get(random.nextInt(list.getAll().size()));
+    @State(Scope.Benchmark)
+    public static class TroveHashRepo{
+        private Tove4jHashMapBasedRepository<Order> list;
+        private Random random = new Random();
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new Tove4jHashMapBasedRepository<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
     }
-}
+    @State(Scope.Benchmark)
+    public static class FastUtilHashRepo{
+        private FastUtilBasedRepository<Order> list;
+        private Random random = new Random();
+        private Order ord;
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            list = new FastUtilBasedRepository<>();
+            IntStream.rangeClosed(0, 20000)
+                    .forEach(el -> list.add(new Order(el, 10, 10)));
+        }
+
+        @TearDown(Level.Invocation)
+        public void doTearDown() {
+            list = null;
+            System.gc();
+        }
+
+        public Order getRandomElement(){
+            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
+                    : new Order(random.nextInt(), 10, 10));
+        }
+        public Order getExisting(){
+            return list.getAll().get(random.nextInt(list.getAll().size()));
+        }
+    }
 }
