@@ -1,40 +1,37 @@
 package com.jenkov.repo.implementation.primitive;
 
-import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import it.unimi.dsi.fastutil.ints.AbstractIntSet;
+import com.jenkov.repo.specification.primitive.IntInMemoryRepository;
+import it.unimi.dsi.fastutil.ints.AbstractIntList;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
-public class FastUtilBasedRepository<T> implements InMemoryRepository<T> {
+public class FastUtilBasedRepository implements IntInMemoryRepository {
 
-    private Set<T> set;
-    private AbstractIntSet set2 = new IntArraySet();
+    private AbstractIntList list;
 
     public FastUtilBasedRepository() {
-        this.set = new ObjectOpenHashSet<T>();
+        this.list = new IntArrayList();
     }
 
     @Override
-    public void add(T element) {
-        set.add(element);
+    public void add(int element) {
+        list.add(element);
     }
 
     @Override
-    public void remove(T element) {
-        set.remove(element);
+    public void remove(int element) {
+        list.remove(element);
     }
 
     @Override
-    public boolean contains(T element) {
-        return set.contains(element);
+    public boolean contains(int element) {
+        return list.contains(element);
     }
 
     @Override
-    public List<T> getAll() {
-        return new ArrayList<>(set);
+    public int getRandomElement(Random random) {
+        return list.get(random.nextInt(list.size()));
     }
 }

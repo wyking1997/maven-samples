@@ -1,38 +1,39 @@
 package com.jenkov.repo.implementation.primitive;
 
 import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
+import com.jenkov.repo.specification.primitive.IntInMemoryRepository;
 import org.eclipse.collections.api.list.primitive.IntList;
 import org.eclipse.collections.impl.bag.mutable.HashBag;
 import org.eclipse.collections.impl.list.mutable.primitive.IntArrayList;
 
 import java.util.List;
+import java.util.Random;
 
-public class GcBagBasedRepo<T> implements InMemoryRepository<T> {
+public class GcBagBasedRepo implements IntInMemoryRepository {
 
-    private HashBag<T> bag;
-    private IntList x = new IntArrayList();
+    private IntArrayList ls = new IntArrayList();
 
     public GcBagBasedRepo() {
-        this.bag = HashBag.newBag();
+        ls = new IntArrayList();
     }
 
     @Override
-    public void add(T element) {
-        bag.add(element);
+    public void add(int element) {
+        ls.add(element);
     }
 
     @Override
-    public void remove(T element) {
-        bag.remove(element);
+    public void remove(int element) {
+        ls.remove(element);
     }
 
     @Override
-    public boolean contains(T element) {
-        return bag.contains(element);
+    public boolean contains(int element) {
+        return ls.contains(element);
     }
 
     @Override
-    public List<T> getAll() {
-        return bag.toList();
+    public int getRandomElement(Random random) {
+        return ls.get(random.nextInt(ls.size()));
     }
 }
