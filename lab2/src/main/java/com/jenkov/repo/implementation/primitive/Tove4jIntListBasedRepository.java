@@ -6,11 +6,11 @@ import gnu.trove.list.array.TIntArrayList;
 
 import java.util.Random;
 
-public class Tove4jHashMapBasedRepository implements IntInMemoryRepository {
+public class Tove4jIntListBasedRepository implements IntInMemoryRepository {
 
     private TIntList list;
 
-    public Tove4jHashMapBasedRepository() {
+    public Tove4jIntListBasedRepository() {
         this.list = new TIntArrayList();
     }
 

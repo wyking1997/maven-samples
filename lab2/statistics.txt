@@ -1,0 +1,62 @@
+SERIAL EXECUTION
+-----------------------------------------------------------------------------------------
+JDKBenchMark.arrayListAdd                   1  avgt    5     173.575 ±    342.689  ns/op
+JDKBenchMark.arrayListContains              1  avgt    5   23860.865 ±   3399.330  ns/op
+JDKBenchMark.arrayListRemove                1  avgt    5   51592.645 ±   9184.134  ns/op
+
+JDKBenchMark.concurentHashMapAdd            1  avgt    5     128.766 ±      4.303  ns/op
+JDKBenchMark.concurentHashMapContains       1  avgt    5  641778.695 ± 148057.876  ns/op
+JDKBenchMark.concurentHashMapRemove         1  avgt    5  350934.127 ± 248491.957  ns/op
+
+JDKBenchMark.fastUtilIntListAdd             1  avgt    5      93.498 ±     20.617  ns/op
+JDKBenchMark.fastUtilIntListContains        1  avgt    5    5476.616 ±    245.288  ns/op
+
+JDKBenchMark.gcIntArrayListAdd              1  avgt    5      81.474 ±     18.233  ns/op
+JDKBenchMark.gcIntArrayListContains         1  avgt    5    5439.092 ±    423.622  ns/op
+JDKBenchMark.gcIntArrayListRemove           1  avgt    5   24372.565 ±   1068.673  ns/op
+
+JDKBenchMark.hashSetAdd                     1  avgt    5      95.349 ±     25.281  ns/op
+JDKBenchMark.hashSetContains                1  avgt    5  545499.990 ± 328385.402  ns/op
+JDKBenchMark.hashSetRemove                  1  avgt    5  340474.418 ±  85359.628  ns/op
+
+JDKBenchMark.treeSetAdd                     1  avgt    5     330.062 ±     47.139  ns/op
+JDKBenchMark.treeSetContains                1  avgt    5  743651.015 ± 184626.944  ns/op
+JDKBenchMark.treeSetRemove                  1  avgt    5  395945.926 ±  88668.501  ns/op
+
+JDKBenchMark.troveIntListAdd                1  avgt    5      95.039 ±     64.603  ns/op
+JDKBenchMark.troveIntListContains           1  avgt    5   15590.485 ±   1123.877  ns/op
+JDKBenchMark.troveIntListRemove             1  avgt    5   50867.851 ±   3255.690  ns/op
+
+USING 2 THREADS
+-----------------------------------------------------------------------------------------
+JDKBenchMark.arrayListAdd                   1  avgt    5      259.598 ±    133.151  ns/op
+JDKBenchMark.arrayListContains              1  avgt    5    29767.816 ±   3020.685  ns/op
+JDKBenchMark.arrayListRemove                1  avgt    5   121114.249 ±  33764.731  ns/op
+
+JDKBenchMark.concurentHashMapAdd            1  avgt    5      287.729 ±     17.600  ns/op
+JDKBenchMark.concurentHashMapContains       1  avgt    5  1021982.775 ± 458227.662  ns/op
+JDKBenchMark.concurentHashMapRemove         1  avgt    5   512786.268 ±  51433.811  ns/op
+
+JDKBenchMark.fastUtilIntListAdd             1  avgt    5      167.143 ±     22.617  ns/op
+JDKBenchMark.fastUtilIntListContains        1  avgt    5     7299.906 ±    920.301  ns/op
+
+JDKBenchMark.gcIntArrayListAdd              1  avgt    5      221.684 ±    136.739  ns/op
+JDKBenchMark.gcIntArrayListContains         1  avgt    5     7672.126 ±   2246.616  ns/op
+JDKBenchMark.gcIntArrayListRemove           1  avgt    5    40722.733 ±   3283.306  ns/op
+
+JDKBenchMark.hashSetAdd                     1  avgt    5      198.548 ±     58.804  ns/op
+JDKBenchMark.hashSetContains                1  avgt    5  1435633.255 ± 644350.844  ns/op
+
+JDKBenchMark.treeSetContains                1  avgt    5  1172954.509 ± 142304.611  ns/op
+
+JDKBenchMark.troveIntListAdd                1  avgt    5      207.102 ±    156.789  ns/op
+JDKBenchMark.troveIntListContains           1  avgt    5    20811.917 ±   3707.740  ns/op
+JDKBenchMark.troveIntListRemove             1  avgt    5    80447.193 ±  10349.326  ns/op
+
+
+
+
+
+
+kolobokeHashMap  --> ALL
+fastUtilIntListRemove
