@@ -5,10 +5,12 @@ import com.jenkov.model.Order;
 import com.jenkov.repo.implementation.nonprimitive.*;
 import com.jenkov.repo.implementation.primitive.FastUtilBasedRepository;
 import com.jenkov.repo.implementation.primitive.GcBagBasedRepo;
+import com.jenkov.repo.implementation.primitive.GcIntArrayListRepo;
 import com.jenkov.repo.implementation.primitive.Tove4jHashMapBasedRepository;
 import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
 import com.jenkov.repo.specification.primitive.IntInMemoryRepository;
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -101,7 +103,7 @@ public class JDKBenchMark {
 //                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
 //    }
 
-    //    // CONCURENT HASH MAP BASED REPOSITORY
+//       //CONCURENT HASH MAP BASED REPOSITORY
 //    @Benchmark
 //    public void concurentHashMapAdd(ConcurrentHashMapRepo state){
 //        state.type = OperationType.ADD;
@@ -122,40 +124,46 @@ public class JDKBenchMark {
 //                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
 //    }
 //
-    // Eclipse Collections Bag Repo
+    // Eclipse Collections IntArrayListRepo
     @Benchmark
-    public void gcConcurentHashMapAdd(GcBagRepo state){
+    public void gcIntArrayListAdd(GcIntArrayLsRepo state){
+        state.type = OperationType.ADD;
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+                .forEach(el -> state.repo.add(state.element + el));
     }
     @Benchmark
-    public void gcConcurentHashMapContains(Blackhole consummer, GcBagRepo state){
+    public void gcIntArrayListContains(Blackhole consummer, GcIntArrayLsRepo state){
+        state.type = OperationType.CONTAINS;
         IntStream.rangeClosed(0, size)
-                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
+                .forEach(el -> consummer.consume(state.repo.contains(state.getRandomElement())));
     }
     @Benchmark
-    public void gcConcurentHashMapRemove(GcBagRepo state){
-        for (int i = 0; i < size; i++){
-            state.list.remove(state.getExisting());
-        }
+    public void gcIntArrayListRemove(GcIntArrayLsRepo state){
+        state.type = OperationType.REMOVE;
+        state.element = state.random.nextInt(state.repo.getSize() - size);
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.repo.remove(el + state.element));
     }
 
     // Koloboke hash map with primitive int
     @Benchmark
     public void kolobokeHashMapAdd(KolobokeHashRepo state){
+        state.type = OperationType.ADD;
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+                .forEach(el -> state.list.add(new Order(state.id + el, 10, 10)));
     }
     @Benchmark
     public void kolobokeHashMapContains(Blackhole consummer, KolobokeHashRepo state){
+        state.type = OperationType.CONTAINS;
         IntStream.rangeClosed(0, size)
                 .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
     }
     @Benchmark
     public void kolobokeHashMapRemove(KolobokeHashRepo state){
-        for (int i = 0; i < size; i++){
-            state.list.remove(state.getExisting());
-        }
+        state.type = OperationType.REMOVE;
+        state.id = state.random.nextInt(state.list.getAll().size() - size);
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
     }
 
     // Trove4j hash map with primitive int
@@ -318,57 +326,23 @@ public class JDKBenchMark {
         }
     }
     @State(Scope.Benchmark)
-    public static class GcBagRepo{
-        private GcBagBasedRepo list;
-        private Random random = new Random();
-
-        @Setup(Level.Invocation)
-        public void doSetup() {
-            list = new GcBagBasedRepo();
-            IntStream.rangeClosed(0, 20000)
-                    .forEach(el -> list.add(el));
-        }
-
-        @TearDown(Level.Invocation)
-        public void doTearDown() {
-            list = null;
-            System.gc();
-        }
-
-        public Order getRandomElement(){
-            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                    : new Order(random.nextInt(), 10, 10));
-        }
-        public Order getExisting(){
-            return list.getAll().get(random.nextInt(list.getAll().size()));
+    public static class GcIntArrayLsRepo extends AbstactIntState{
+        @Setup(Level.Iteration)
+        public void doSetup(){
+            repo = new GcIntArrayListRepo();
+            IntStream.rangeClosed(0, 20000).forEach(el -> repo.add(el));
         }
     }
     @State(Scope.Benchmark)
-    public static class KolobokeHashRepo{
-        private KolobokeHashBasedRepo<Order> list;
-        private Random random = new Random();
-
-        @Setup(Level.Invocation)
+    public static class KolobokeHashRepo extends AbstactState{
+        @Setup(Level.Iteration)
         public void doSetup() {
             list = new KolobokeHashBasedRepo<>();
             IntStream.rangeClosed(0, 20000)
                     .forEach(el -> list.add(new Order(el, 10, 10)));
         }
-
-        @TearDown(Level.Invocation)
-        public void doTearDown() {
-            list = null;
-            System.gc();
-        }
-
-        public Order getRandomElement(){
-            return (random.nextInt(100) > 10 ? new Order(list.getAll().get(random.nextInt(list.getAll().size())).getId(), 1,1)
-                    : new Order(random.nextInt(), 10, 10));
-        }
-        public Order getExisting(){
-            return list.getAll().get(random.nextInt(list.getAll().size()));
-        }
     }
+
     @State(Scope.Benchmark)
     public static class TroveHashRepo{
         private Tove4jHashMapBasedRepository<Order> list;

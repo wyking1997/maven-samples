@@ -9,4 +9,5 @@ public interface IntInMemoryRepository {
     public void remove(int element);
     public boolean contains(int element);
     public int getRandomElement(Random random);
+    public int getSize();
 }

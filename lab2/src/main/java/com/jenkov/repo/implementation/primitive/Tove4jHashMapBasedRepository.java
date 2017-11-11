@@ -33,4 +33,9 @@ public class Tove4jHashMapBasedRepository implements IntInMemoryRepository {
     public int getRandomElement(Random random) {
         return list.get(random.nextInt(list.size()));
     }
+
+    @Override
+    public int getSize() {
+        return list.size();
+    }
 }
