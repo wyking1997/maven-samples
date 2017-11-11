@@ -1,13 +1,16 @@
-package com.jenkov.repo.implementation;
+package com.jenkov.repo.implementation.primitive;
 
-import com.jenkov.repo.specification.InMemoryRepository;
+import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
+import org.eclipse.collections.api.list.primitive.IntList;
 import org.eclipse.collections.impl.bag.mutable.HashBag;
+import org.eclipse.collections.impl.list.mutable.primitive.IntArrayList;
 
 import java.util.List;
 
 public class GcBagBasedRepo<T> implements InMemoryRepository<T> {
 
     private HashBag<T> bag;
+    private IntList x = new IntArrayList();
 
     public GcBagBasedRepo() {
         this.bag = HashBag.newBag();

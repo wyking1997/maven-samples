@@ -1,6 +1,6 @@
-package com.jenkov.repo.implementation;
+package com.jenkov.repo.implementation.nonprimitive;
 
-import com.jenkov.repo.specification.InMemoryRepository;
+import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
 import com.koloboke.collect.map.hash.HashIntObjMap;
 import com.koloboke.collect.map.hash.HashIntObjMaps;
 
@@ -10,6 +10,8 @@ import java.util.List;
 public class KolobokeHashBasedRepo<T> implements InMemoryRepository<T> {
 
     private HashIntObjMap map = HashIntObjMaps.newMutableMap();
+
+    //did not find something more, like primitive lists or primitive sets
 
     @Override
     public void add(T element) {

@@ -1,15 +1,17 @@
-package com.jenkov.repo.implementation;
+package com.jenkov.repo.implementation.nonprimitive;
 
-import com.jenkov.repo.specification.InMemoryRepository;
+import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class ArrayListBasedRepositpory<T> implements InMemoryRepository<T> {
-    private List<T> arr;
+public class HashSetBasedRepository<T> implements InMemoryRepository<T> {
+    private Set<T> arr;
 
-    public ArrayListBasedRepositpory() {
-        this.arr = new ArrayList<>();
+    public HashSetBasedRepository() {
+        this.arr = new HashSet<>();
     }
 
     @Override
@@ -29,6 +31,6 @@ public class ArrayListBasedRepositpory<T> implements InMemoryRepository<T> {
 
     @Override
     public List<T> getAll() {
-        return arr;
+        return new ArrayList<>(arr);
     }
 }

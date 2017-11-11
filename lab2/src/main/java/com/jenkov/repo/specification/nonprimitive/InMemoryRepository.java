@@ -1,4 +1,4 @@
-package com.jenkov.repo.specification;
+package com.jenkov.repo.specification.nonprimitive;
 
 import java.util.List;
 

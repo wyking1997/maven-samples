@@ -2,10 +2,12 @@ package com.jenkov;
 
 import com.jenkov.model.OperationType;
 import com.jenkov.model.Order;
-import com.jenkov.repo.implementation.*;
-import com.jenkov.repo.specification.InMemoryRepository;
+import com.jenkov.repo.implementation.nonprimitive.*;
+import com.jenkov.repo.implementation.primitive.FastUtilBasedRepository;
+import com.jenkov.repo.implementation.primitive.GcBagBasedRepo;
+import com.jenkov.repo.implementation.primitive.Tove4jHashMapBasedRepository;
+import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -138,11 +140,11 @@ public class JDKBenchMark {
 //    }
 //
 //    // Koloboke hash map with primitive int
-//    @Benchmark
-//    public void kolobokeHashMapAdd(KolobokeHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
+    @Benchmark
+    public void kolobokeHashMapAdd(KolobokeHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
 //    @Benchmark
 //    public void kolobokeHashMapContains(Blackhole consummer, KolobokeHashRepo state){
 //        IntStream.rangeClosed(0, size)
@@ -155,12 +157,12 @@ public class JDKBenchMark {
 //        }
 //    }
 //
-//    // Trove4j hash map with primitive int
-//    @Benchmark
-//    public void troveHashSetAdd(TroveHashRepo state){
-//        IntStream.rangeClosed(0, size)
-//                .forEach(el -> state.list.add(new Order(el, 10, 10)));
-//    }
+    // Trove4j hash map with primitive int
+    @Benchmark
+    public void troveHashSetAdd(TroveHashRepo state){
+        IntStream.rangeClosed(0, size)
+                .forEach(el -> state.list.add(new Order(el, 10, 10)));
+    }
 //    @Benchmark
 //    public void troveHashSetContains(Blackhole consummer, TroveHashRepo state){
 //        IntStream.rangeClosed(0, size)

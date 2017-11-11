@@ -1,6 +1,6 @@
-package com.jenkov.repo.implementation;
+package com.jenkov.repo.implementation.nonprimitive;
 
-import com.jenkov.repo.specification.InMemoryRepository;
+import com.jenkov.repo.specification.nonprimitive.InMemoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
