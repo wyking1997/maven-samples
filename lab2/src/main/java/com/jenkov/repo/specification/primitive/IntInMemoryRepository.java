@@ -1,6 +1,5 @@
 package com.jenkov.repo.specification.primitive;
 
-import java.util.List;
 import java.util.Random;
 
 public interface IntInMemoryRepository {

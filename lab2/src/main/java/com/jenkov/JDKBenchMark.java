@@ -24,11 +24,10 @@ import java.util.stream.IntStream;
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(1)
-//@Threads(4)
+@Threads(2)
 @State(Scope.Benchmark)
 public class JDKBenchMark {
-    @Param({"1"})
-//    @Param({"1", "10", "50"})
+    @Param({"1", "10", "50", "100"})
     public static int size;
 
     public static void main(String[] args) throws RunnerException {
@@ -142,27 +141,6 @@ public class JDKBenchMark {
         state.element = state.random.nextInt(state.repo.getSize() - size);
         IntStream.rangeClosed(0, size)
                 .forEach(el -> state.repo.remove(el + state.element));
-    }
-
-//    Koloboke hash map with primitive int
-    @Benchmark
-    public void kolobokeHashMapAdd(KolobokeHashRepo state){
-        state.type = OperationType.ADD;
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.add(new Order(state.id + el, 10, 10)));
-    }
-    @Benchmark
-    public void kolobokeHashMapContains(Blackhole consummer, KolobokeHashRepo state){
-        state.type = OperationType.CONTAINS;
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> consummer.consume(state.list.contains(state.getRandomElement())));
-    }
-    @Benchmark
-    public void kolobokeHashMapRemove(KolobokeHashRepo state){
-        state.type = OperationType.REMOVE;
-        state.id = state.random.nextInt(state.list.getAll().size() - size);
-        IntStream.rangeClosed(0, size)
-                .forEach(el -> state.list.remove(new Order(state.id + el, 10, 10)));
     }
 
 //    Trove4j List with primitive int
@@ -337,16 +315,6 @@ public class JDKBenchMark {
         public void doSetup(){
             repo = new GcIntArrayListRepo();
             IntStream.rangeClosed(0, 20000).forEach(el -> repo.add(el));
-        }
-    }
-
-    @State(Scope.Benchmark)
-    public static class KolobokeHashRepo extends AbstactState{
-        @Setup(Level.Iteration)
-        public void doSetup() {
-            list = new KolobokeHashBasedRepo<>();
-            IntStream.rangeClosed(0, 20000)
-                    .forEach(el -> list.add(new Order(el, 10, 10)));
         }
     }
 
