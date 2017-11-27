@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -11,10 +12,13 @@ public class Main {
         List<BigDecimal> ls = new LinkedList<>();
         Random random = new Random();
 
-        IntStream.rangeClosed(0, 200000)
+        IntStream.rangeClosed(1, 200000)
                 .forEach(e -> ls.add(new BigDecimal(Math.random())));
 
-//        System.out.println(ls.stream().reduce(BigDecimal.ZERO, (x, y) -> x.add(y)));
+        //SUM
+        System.out.println(ls.stream().reduce(BigDecimal.ZERO, (x, y) -> x.add(y)));
+
+
 //        System.out.println();
 //        BigDecimal[] avg = ls.stream()
 //                .map(el -> new BigDecimal[]{el, BigDecimal.ONE})
@@ -23,7 +27,7 @@ public class Main {
 //                .get();
 //        System.out.println(avg[0]);
 
-
+        //AVG
         int counter[] = {0};
         BigDecimal average = ls.stream().reduce((avg, element) -> {
             avg.add(element);
@@ -36,6 +40,12 @@ public class Main {
         }).get();
 
         System.out.println(ls);
-        System.out.println("\n\n" + average);
+        System.out.println("\n\n" + average + "\n\n");
+
+
+
+        //TOP 10
+        List<BigDecimal> ls2 = ls.stream().sorted().limit(ls.size() / 10).collect(Collectors.toList());
+        System.out.println(ls.size() + " " + ls2.size());
     }
 }
