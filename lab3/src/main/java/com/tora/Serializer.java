@@ -8,11 +8,11 @@ import java.util.List;
 public class Serializer {
 
     public static void serializeBigDecimal(List<BigDecimal> ls, String filePath){
-        System.out.println("Serialize list of size " + ls.size());
         try {
             FileOutputStream fileOut =
                     new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeInt(ls.size());
             ls.forEach(big -> {
                 try {
                     out.writeObject(big);
@@ -22,17 +22,17 @@ public class Serializer {
             });
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in " + filePath);
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
-    public static List<BigDecimal> deserializeBigDecimal(int numberOfElements, String filePath){
+    public static List<BigDecimal> deserializeBigDecimal(String filePath){
         List<BigDecimal> result = new LinkedList<>();
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
+            int numberOfElements = in.readInt();
             while (numberOfElements > 0) {
                 result.add((BigDecimal) in.readObject());
                 numberOfElements--;
@@ -44,7 +44,6 @@ public class Serializer {
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
-        System.out.println("Deserialized " + result.size() + " objects");
         return result;
     }
 }

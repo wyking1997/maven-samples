@@ -10,7 +10,8 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) {
         int listSize = 100000;
-        String filePath = "./lab3/src/main/java/com/tora/digDecimals.serialized";
+//        String filePath = "./lab3/src/main/java/com/tora/digDecimals.serialized";
+        String filePath = "./lab3/src/test/java/com/tora/test.serialize";
 
         List<BigDecimal> ls = new LinkedList<>();
         Random random = new Random();
@@ -19,7 +20,7 @@ public class Main {
                 .forEach(e -> ls.add(new BigDecimal(Math.random())));
 
         Serializer.serializeBigDecimal(ls, filePath);
-        Serializer.deserializeBigDecimal(listSize, filePath);
+        Serializer.deserializeBigDecimal(filePath);
         System.exit(0);
 
         //SUM
