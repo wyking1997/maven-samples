@@ -11,14 +11,16 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) {
         int listSize = 100000;
+        String filePath = "./lab3/src/main/java/com/tora/digDecimals.serialized";
+
         List<BigDecimal> ls = new LinkedList<>();
         Random random = new Random();
 
         IntStream.rangeClosed(1, listSize)
                 .forEach(e -> ls.add(new BigDecimal(Math.random())));
 
-        serializeBigDecimal(ls);
-        deserializeBigDecimal(listSize);
+        serializeBigDecimal(ls, filePath);
+        deserializeBigDecimal(listSize, filePath);
         System.exit(0);
 
         //SUM
@@ -57,11 +59,11 @@ public class Main {
 
     }
 
-    private static void serializeBigDecimal(List<BigDecimal> ls){
+    private static void serializeBigDecimal(List<BigDecimal> ls, String filePath){
         System.out.println("Serialize list of size " + ls.size());
         try {
             FileOutputStream fileOut =
-                    new FileOutputStream("numbers.ser");
+                    new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             ls.forEach(big -> {
                 try {
@@ -72,16 +74,16 @@ public class Main {
             });
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in number.ser");
+            System.out.println("Serialized data is saved in " + filePath);
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
-    private static List<BigDecimal> deserializeBigDecimal(int numberOfElements){
+    private static List<BigDecimal> deserializeBigDecimal(int numberOfElements, String filePath){
         List<BigDecimal> result = new LinkedList<>();
         try {
-            FileInputStream fileIn = new FileInputStream("numbers.ser");
+            FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             while (numberOfElements > 0) {
                 result.add((BigDecimal) in.readObject());
