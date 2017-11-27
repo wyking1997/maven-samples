@@ -71,5 +71,6 @@ public class Order implements Comparable{
                 ", price=" + price +
                 ", quatity=" + quatity +
                 '}';
+
     }
 }

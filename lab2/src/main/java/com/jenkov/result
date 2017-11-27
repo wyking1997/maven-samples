@@ -13,6 +13,7 @@ JDKBenchMark.arrayListRemove                1  avgt    5     45693.958 ±    450
 JDKBenchMark.arrayListRemove               10  avgt    5    192368.798 ±    9827.389  ns/op
 JDKBenchMark.arrayListRemove               50  avgt    5    726119.768 ±  118616.979  ns/op
 JDKBenchMark.arrayListRemove              100  avgt    5   1403943.205 ±  724410.254  ns/op
+
 JDKBenchMark.concurentHashMapAdd            1  avgt    5       116.438 ±      12.727  ns/op
 JDKBenchMark.concurentHashMapAdd           10  avgt    5       428.635 ±      54.979  ns/op
 JDKBenchMark.concurentHashMapAdd           50  avgt    5      1801.922 ±     255.327  ns/op
@@ -25,6 +26,7 @@ JDKBenchMark.concurentHashMapRemove         1  avgt    5    247470.399 ±  10092
 JDKBenchMark.concurentHashMapRemove        10  avgt    5    227601.601 ±   46388.304  ns/op
 JDKBenchMark.concurentHashMapRemove        50  avgt    5    190041.777 ±   62728.437  ns/op
 JDKBenchMark.concurentHashMapRemove       100  avgt    5    158447.622 ±   99546.209  ns/op
+
 JDKBenchMark.fastUtilIntListAdd             1  avgt    5        81.625 ±      26.879  ns/op
 JDKBenchMark.fastUtilIntListAdd            10  avgt    5       148.112 ±      29.331  ns/op
 JDKBenchMark.fastUtilIntListAdd            50  avgt    5       542.030 ±      86.273  ns/op
@@ -33,6 +35,11 @@ JDKBenchMark.fastUtilIntListContains        1  avgt    5      4513.757 ±     43
 JDKBenchMark.fastUtilIntListContains       10  avgt    5     25924.170 ±    5071.285  ns/op
 JDKBenchMark.fastUtilIntListContains       50  avgt    5    117753.499 ±   19204.489  ns/op
 JDKBenchMark.fastUtilIntListContains      100  avgt    5    227161.496 ±   22445.842  ns/op
+JDKBenchMark.fastUtilIntListRemove       1  avgt    5    2905.832 ±   912.924  ns/op
+JDKBenchMark.fastUtilIntListRemove      10  avgt    5   18152.203 ±  2764.401  ns/op
+JDKBenchMark.fastUtilIntListRemove      50  avgt    5   80652.045 ± 32239.655  ns/op
+JDKBenchMark.fastUtilIntListRemove     100  avgt    5  129026.087 ± 11382.699  ns/op
+
 JDKBenchMark.gcIntArrayListAdd              1  avgt    5        64.733 ±      33.908  ns/op
 JDKBenchMark.gcIntArrayListAdd             10  avgt    5       253.572 ±      41.538  ns/op
 JDKBenchMark.gcIntArrayListAdd             50  avgt    5       467.318 ±     217.561  ns/op
@@ -45,6 +52,7 @@ JDKBenchMark.gcIntArrayListRemove           1  avgt    5     22570.847 ±    130
 JDKBenchMark.gcIntArrayListRemove          10  avgt    5    124041.803 ±   12770.853  ns/op
 JDKBenchMark.gcIntArrayListRemove          50  avgt    5    572944.287 ±   42328.680  ns/op
 JDKBenchMark.gcIntArrayListRemove         100  avgt    5   1124604.738 ±   38914.514  ns/op
+
 JDKBenchMark.hashSetAdd                     1  avgt    5        71.596 ±       4.865  ns/op
 JDKBenchMark.hashSetAdd                    10  avgt    5       234.177 ±      19.974  ns/op
 JDKBenchMark.hashSetAdd                    50  avgt    5      1096.623 ±     151.651  ns/op
@@ -57,6 +65,7 @@ JDKBenchMark.hashSetRemove                  1  avgt    5    203848.247 ±   1328
 JDKBenchMark.hashSetRemove                 10  avgt    5    201169.780 ±   40717.521  ns/op
 JDKBenchMark.hashSetRemove                 50  avgt    5    173658.611 ±   74171.741  ns/op
 JDKBenchMark.hashSetRemove                100  avgt    5    144624.637 ±   53925.434  ns/op
+
 JDKBenchMark.treeSetAdd                     1  avgt    5       306.699 ±      94.865  ns/op
 JDKBenchMark.treeSetAdd                    10  avgt    5      1710.796 ±     163.242  ns/op
 JDKBenchMark.treeSetAdd                    50  avgt    5      8121.138 ±     835.829  ns/op
@@ -69,6 +78,7 @@ JDKBenchMark.treeSetRemove                  1  avgt    5    304564.967 ±  12776
 JDKBenchMark.treeSetRemove                 10  avgt    5    373139.259 ±   36607.744  ns/op
 JDKBenchMark.treeSetRemove                 50  avgt    5    256146.858 ±   25748.099  ns/op
 JDKBenchMark.treeSetRemove                100  avgt    5    221939.872 ±   12869.360  ns/op
+
 JDKBenchMark.troveIntListAdd                1  avgt    5        54.452 ±      15.208  ns/op
 JDKBenchMark.troveIntListAdd               10  avgt    5       256.293 ±     208.204  ns/op
 JDKBenchMark.troveIntListAdd               50  avgt    5       471.247 ±     340.766  ns/op

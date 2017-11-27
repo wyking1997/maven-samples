@@ -24,10 +24,9 @@ import java.util.stream.IntStream;
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(1)
-@Threads(2)
 @State(Scope.Benchmark)
 public class JDKBenchMark {
-    @Param({"1", "10", "50", "100"})
+    @Param({"1"})
     public static int size;
 
     public static void main(String[] args) throws RunnerException {
@@ -179,9 +178,10 @@ public class JDKBenchMark {
     @Benchmark
     public void fastUtilIntListRemove(FastUtilHashRepo state){
         state.type = OperationType.REMOVE;
-        state.element = state.random.nextInt(state.repo.getSize() - size);
+        while (state.element > state.repo.getSize() - size)
+            state.element = state.random.nextInt(state.repo.getSize() - size);
         IntStream.rangeClosed(0, size)
-                .forEach(el -> state.repo.remove(el + state.element));
+                .forEach(el -> state.repo.remove(state.element));
     }
 
     //java -jar target/benchmarks.jar JMHSample_26 -f 1
