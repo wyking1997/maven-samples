@@ -1,27 +1,34 @@
 package com.tora;
 
-import java.io.BufferedReader;
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    private final String FILE_NAME = "./lab4/src/main/java/com/tora/input4.txt";
+    private final String INPUT_FILE_NAME = "./lab4/src/main/java/com/tora/input4.txt";
+    private final String OUTPUT_FILE_NAME = "./lab4/src/main/java/com/tora/valid.data";
 
     public static void main(String[] args) throws FileNotFoundException {
         Main main = new Main();
 
-        main.restorePersones(main.FILE_NAME);
+        main.eraseFile(main.OUTPUT_FILE_NAME);
+        main.restorePersones(main.INPUT_FILE_NAME).stream().forEach(el -> main.appendToFile(main.OUTPUT_FILE_NAME, el.toString()));
     }
 
-    public List<Person> restorePersones(String fileName) throws FileNotFoundException {
+    private List<Person> restorePersones(String inputFileName) throws FileNotFoundException {
 
         List<Person> result = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(fileName));
+        Scanner scanner = new Scanner(new File(inputFileName));
         scanner.useDelimiter("%");
 
         String personeInf;
@@ -36,5 +43,22 @@ public class Main {
         }
 
         return result;
+    }
+
+    private void appendToFile(String fileName, String data){
+        try {
+            Files.write(Paths.get(fileName), data.getBytes(), StandardOpenOption.APPEND);
+        }catch (IOException e) {}
+    }
+
+    private void eraseFile(String fileName){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        writer.print("");
+        writer.close();
     }
 }
