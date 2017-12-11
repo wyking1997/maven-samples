@@ -1,5 +1,8 @@
 package com.tora;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class Person {
     private String fullName;
     private String cnp;
@@ -23,7 +26,21 @@ public class Person {
 
     private void validateCNP(String cnp) throws Throwable{
         if (!cnp.matches("[0-9]{13,13}"))
-            throw new Exception("CNP not valid!");
+            throw new Exception("CNP must cointain only digits!");
+
+        if (cnp.charAt(0) != '1' && cnp.charAt(0) != '2')
+            throw new Exception("CNP sex is not valid");
+
+        String formatString = "yyMMdd";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(formatString);
+            format.setLenient(false);
+            format.parse(cnp.substring(1, 7));
+        } catch (ParseException e) {
+            throw new Exception("CNP date not valid!");
+        } catch (IllegalArgumentException e) {
+            throw new Exception("CNP date not valid!");
+        }
     }
 
     private void validateEmail(String email) throws Throwable{
