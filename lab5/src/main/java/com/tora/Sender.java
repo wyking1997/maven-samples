@@ -26,6 +26,25 @@ public class Sender {
     }
 
     public void send(String persone, String message){
+        if (message.equalsIgnoreCase("!byebye")){
+            for (String p : personeToSocket.keySet()){
+                try {
+                    dataOutputStream = new DataOutputStream(personeToSocket.get(p).getOutputStream());
+                    dataOutputStream.writeUTF("!bye");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            while (personeToSocket.size() > 0){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.exit(0);
+        }
         if (message.matches("!hello [a-zA-Z]+")){
             persone = message.substring(7);
             if (personeToSocket.containsKey(persone))

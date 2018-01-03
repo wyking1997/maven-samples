@@ -19,6 +19,7 @@ public class Publisher {
 
     public void resetWindow(){
         resetConversation();
+        this.currentPersone = "";
         System.out.println("I am " + me);
         System.out.println("Waiting for cmd");
     }
@@ -47,7 +48,7 @@ public class Publisher {
         if (!messages.containsKey(personeName)){
             messages.put(personeName, "");
         } else
-            System.out.println(messages.get(currentPersone));
+            System.out.print(messages.get(currentPersone));
     }
 
     public void showError(String errorMsg){

@@ -54,12 +54,9 @@ public class Mediator {
     }
 
     private void startClient() {
-        System.out.println(me + ": start client");
-
         Scanner scanner = new Scanner(System.in);
         String message;
 
-        System.out.println("wait for cmd");
         while (true){
             message = scanner.nextLine();
             sender.send(publisher.getCurrentPersone(), message);

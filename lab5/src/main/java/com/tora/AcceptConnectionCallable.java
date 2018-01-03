@@ -28,7 +28,6 @@ public class AcceptConnectionCallable implements Runnable {
     public void run() {
         String name = "";
         try {
-            System.out.println("waiting for connected persone name");
             String message = (new DataInputStream(socket.getInputStream())).readUTF();
             name = message.toLowerCase().substring(7);
             System.out.println(name + " connected to me");

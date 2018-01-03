@@ -2,7 +2,7 @@ package com.tora;
 
 public class Main {
     public static void main(String[] args) {
-        Mediator mediator = new Mediator("maia");
+        Mediator mediator = new Mediator("sorin");
 
 //        dnsTable.put("maia", new IPAddress("localhost",9090));
 //        dnsTable.put("sorin", new IPAddress("localhost",9091));

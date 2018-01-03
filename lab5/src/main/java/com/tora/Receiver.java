@@ -28,7 +28,6 @@ public class Receiver {
     }
 
     public void startReceive(){
-        System.out.println("start receiver for " + persone);
         try {
             while (true){
                 String msg = dataInputStream.readUTF();
