@@ -2,11 +2,14 @@ package com.tora;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 public class Person {
     private String fullName;
     private String cnp;
     private String email;
+
+    private static Pattern emailPattern = Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$");
 
     public Person(String fullName, String cnp, String email) throws Throwable{
         email = email.toLowerCase();
@@ -44,6 +47,7 @@ public class Person {
     }
 
     private void validateEmail(String email) throws Throwable{
+
         if (!email.matches("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$"))
             throw new Exception("Email not valid!");
     }
