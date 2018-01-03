@@ -35,7 +35,7 @@ public class AcceptConnectionCallable implements Runnable {
                 if (name.length() > 0) {
                     DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     dataOutputStream.writeUTF("!ack");
-                    publisher.addMessageToPersone(name, "!hello " + name, true);
+                    publisher.addMessageToPersone(name, "!hello " + publisher.getMe(), true);
                     personeToSocket.put(name, socket);
                     Receiver receiver = new Receiver(name, personeToSocket, personeToReceiver, publisher, sender);
                     executorService.submit(() -> receiver.startReceive());
